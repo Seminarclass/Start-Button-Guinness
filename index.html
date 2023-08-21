@@ -18,16 +18,16 @@
         <form class="mt-4">
             <div class="form-group">
                 <label for="startNumber">Starting Number:</label>
-                <input type="text" class="form-control" id="startNumber">
+                <input type="number" class="form-control" id="startNumber">
             </div>
             <div class="form-group">
                 <label for="endNumber">Ending Number:</label>
-                <input type="text" class="form-control" id="endNumber">
+                <input type="number" class="form-control" id="endNumber">
             </div>
-            <button type="button" class="btn btn-primary" id="startButton">Start</button>
-            <button type="button" class="btn btn-success ml-2" id="openAllButton" style="display: none;">Open All Links</button>
+            <button type="button" class="btn btn-primary btn-block" id="startButton">Start</button>
+            <button type="button" class="btn btn-success btn-block mt-2" id="openAllButton" style="display: none;">Open All Links</button>
         </form>
-        <ul class="mt-4" id="linkList"></ul>
+        <div class="mt-4" id="linkList"></div>
     </div>
 
     <script>
@@ -52,13 +52,14 @@
                     link.textContent = `Link ${i}`;
                     link.target = "_blank"; // Open link in a new tab
 
-                    const listItem = document.createElement('li');
+                    const listItem = document.createElement('div');
+                    listItem.classList.add("alert", "alert-light", "mb-2");
                     listItem.appendChild(link);
                     linkList.appendChild(listItem);
                     linksArray.push(link.href);
                 }
 
-                openAllButton.style.display = 'inline'; // Display the "Open All Links" button
+                openAllButton.style.display = 'block'; // Display the "Open All Links" button
             } else {
                 console.log('Invalid input');
             }
