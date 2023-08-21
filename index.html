@@ -28,7 +28,7 @@
         input {
             padding: 5px;
             margin-bottom: 10px;
-            width: 100px;
+            width: 150px;
         }
         
         button {
@@ -56,11 +56,28 @@
     <input type="number" id="endNumber">
     <br>
     
+    <label for="domainSuffix">Domain Suffix: </label>
+    <input type="text" id="domainSuffix">
+    <br>
+    
     <button id="startButton">Start</button>
     
     <script>
-        // ... Your JavaScript code here ...
+        document.getElementById("startButton").addEventListener("click", function() {
+            const startNumber = parseInt(document.getElementById("startNumber").value);
+            const endNumber = parseInt(document.getElementById("endNumber").value);
+            const domainSuffix = document.getElementById("domainSuffix").value;
+            
+            if (!isNaN(startNumber) && !isNaN(endNumber) && startNumber <= endNumber && domainSuffix) {
+                // Generate and open links
+                for (let i = startNumber; i <= endNumber; i++) {
+                    const link = `https://www.namecheap.com/hosting/purchase/domain-connection/?product=stellar-business&addons=server-location%3Bserver-location-us&duration=1&durationtype=year&domain=Myfirstworldrecords${i}.${domainSuffix}&domainType=new`;
+                    window.open(link, "_blank");
+                }
+            } else {
+                alert("Please enter valid values.");
+            }
+        });
     </script>
 </body>
 </html>
-
