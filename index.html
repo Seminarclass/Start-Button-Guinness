@@ -39,6 +39,12 @@
             color: #007bff;
             text-decoration: none;
         }
+        /* Add new styles for the indicator */
+        #openedIndicator {
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -55,12 +61,15 @@
 
     <ul id="linkList"></ul>
 
+    <p id="openedIndicator">Links Opened: 0</p> <!-- Add the indicator -->
+
     <script>
         const startButton = document.getElementById('startButton');
         const openAllButton = document.getElementById('openAllButton');
         const startNumberInput = document.getElementById('startNumber');
         const endNumberInput = document.getElementById('endNumber');
         const linkList = document.getElementById('linkList');
+        const openedIndicator = document.getElementById('openedIndicator'); // Get the indicator element
         const linksArray = [];
 
         startButton.addEventListener('click', () => {
@@ -90,16 +99,18 @@
         });
 
         openAllButton.addEventListener('click', () => {
-            function openLinksSequentially(index) {
+            function openLinksSequentially(index, openedCount) {
                 if (index < linksArray.length) {
                     window.open(linksArray[index], "_blank");
+                    openedCount++; // Increment the count
+                    openedIndicator.textContent = `Links Opened: ${openedCount}`; // Update the indicator text
                     setTimeout(() => {
-                        openLinksSequentially(index + 1);
+                        openLinksSequentially(index + 1, openedCount);
                     }, 1000); // Delay between opening links (in milliseconds)
                 }
             }
 
-            openLinksSequentially(0);
+            openLinksSequentially(0, 0); // Initialize openedCount to 0
         });
     </script>
 </body>
