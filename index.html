@@ -2,6 +2,38 @@
 <html>
 <head>
     <title>Auto Link Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            padding: 5px;
+            width: 100px;
+            margin-bottom: 10px;
+        }
+        #startButton {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <label for="startNumber">Starting Number:</label>
@@ -12,34 +44,10 @@
 
     <button id="startButton">Start</button>
 
-    <ul id="linkList"></ul> <!-- List to display generated links -->
+    <ul id="linkList"></ul>
 
     <script>
-        const startButton = document.getElementById('startButton');
-        const startNumberInput = document.getElementById('startNumber');
-        const endNumberInput = document.getElementById('endNumber');
-        const linkList = document.getElementById('linkList');
-
-        startButton.addEventListener('click', () => {
-            const startNumber = parseInt(startNumberInput.value);
-            const endNumber = parseInt(endNumberInput.value);
-
-            if (!isNaN(startNumber) && !isNaN(endNumber) && startNumber <= endNumber) {
-                linkList.innerHTML = ''; // Clear existing links
-
-                for (let i = startNumber; i <= endNumber; i++) {
-                    const link = document.createElement('a');
-                    link.href = `https://www.namecheap.com/hosting/purchase/domain-connection/?product=stellar-business&addons=server-location%3Bserver-location-us&duration=1&durationtype=year&domain=Myfirstworldrecords${i}.pw&domainType=new`;
-                    link.textContent = `Link ${i}`;
-                    
-                    const listItem = document.createElement('li');
-                    listItem.appendChild(link);
-                    linkList.appendChild(listItem);
-                }
-            } else {
-                console.log('Invalid input');
-            }
-        });
+        // ... Rest of your JavaScript code
     </script>
 </body>
 </html>
