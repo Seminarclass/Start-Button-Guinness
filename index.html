@@ -5,7 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auto Links Generator</title>
     <style>
-        /* ... Your CSS styles ... */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            font-weight: bold;
+        }
+        
+        input {
+            padding: 5px;
+            margin-bottom: 10px;
+            width: 150px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -26,19 +63,12 @@
     <button id="startButton">Start</button>
     
     <script>
-        let hasScriptExecuted = false;
-        
         document.getElementById("startButton").addEventListener("click", function() {
-            if (hasScriptExecuted) {
-                return; // Prevent further execution
-            }
-            
             const startNumber = parseInt(document.getElementById("startNumber").value);
             const endNumber = parseInt(document.getElementById("endNumber").value);
             const domainSuffix = document.getElementById("domainSuffix").value;
             
             if (!isNaN(startNumber) && !isNaN(endNumber) && startNumber <= endNumber && domainSuffix) {
-                hasScriptExecuted = true; // Mark script as executed
                 // Generate and open links
                 for (let i = startNumber; i <= endNumber; i++) {
                     const link = `https://www.namecheap.com/hosting/purchase/domain-connection/?product=stellar-business&addons=server-location%3Bserver-location-us&duration=1&durationtype=year&domain=Myfirstworldrecords${i}.${domainSuffix}&domainType=new`;
