@@ -2,29 +2,33 @@
 <html>
 <head>
     <title>Auto Link Generator</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            padding: 10px;
-            text-align: center;
-            font-size: 16px;
+            padding: 20px;
         }
-        /* Rest of your styles */
+        /* Additional styling if needed */
     </style>
 </head>
 <body>
-    <h1>Auto Link Generator</h1>
-    
-    <label for="startNumber">Starting Number:</label>
-    <input type="text" id="startNumber" /><br>
-
-    <label for="endNumber">Ending Number:</label>
-    <input type="text" id="endNumber" /><br>
-
-    <button id="startButton">Start</button>
-    <button id="openAllButton" style="display: none;">Open All Links</button>
-
-    <ul id="linkList"></ul>
+    <div class="container">
+        <h1 class="mt-3">Auto Link Generator</h1>
+        <form class="mt-4">
+            <div class="form-group">
+                <label for="startNumber">Starting Number:</label>
+                <input type="text" class="form-control" id="startNumber">
+            </div>
+            <div class="form-group">
+                <label for="endNumber">Ending Number:</label>
+                <input type="text" class="form-control" id="endNumber">
+            </div>
+            <button type="button" class="btn btn-primary" id="startButton">Start</button>
+            <button type="button" class="btn btn-success ml-2" id="openAllButton" style="display: none;">Open All Links</button>
+        </form>
+        <ul class="mt-4" id="linkList"></ul>
+    </div>
 
     <script>
         const startButton = document.getElementById('startButton');
