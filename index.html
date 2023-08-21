@@ -2,33 +2,58 @@
 <html>
 <head>
     <title>Auto Link Generator</title>
-    <!-- Include Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            padding: 20px;
+            padding: 10px;
+            text-align: center;
+            font-size: 16px;
         }
-        /* Additional styling if needed */
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            padding: 5px;
+            width: 100px;
+            margin-bottom: 10px;
+        }
+        #startButton, #openAllButton {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #openAllButton {
+            margin-left: 10px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="mt-3">Auto Link Generator</h1>
-        <form class="mt-4">
-            <div class="form-group">
-                <label for="startNumber">Starting Number:</label>
-                <input type="number" class="form-control" id="startNumber">
-            </div>
-            <div class="form-group">
-                <label for="endNumber">Ending Number:</label>
-                <input type="number" class="form-control" id="endNumber">
-            </div>
-            <button type="button" class="btn btn-primary btn-block" id="startButton">Start</button>
-            <button type="button" class="btn btn-success btn-block mt-2" id="openAllButton" style="display: none;">Open All Links</button>
-        </form>
-        <div class="mt-4" id="linkList"></div>
-    </div>
+    <h1>Auto Link Generator</h1>
+    
+    <label for="startNumber">Starting Number:</label>
+    <input type="text" id="startNumber" /><br>
+
+    <label for="endNumber">Ending Number:</label>
+    <input type="text" id="endNumber" /><br>
+
+    <button id="startButton">Start</button>
+    <button id="openAllButton" style="display: none;">Open All Links</button>
+
+    <ul id="linkList"></ul>
 
     <script>
         const startButton = document.getElementById('startButton');
@@ -52,33 +77,29 @@
                     link.textContent = `Link ${i}`;
                     link.target = "_blank"; // Open link in a new tab
 
-                    const listItem = document.createElement('div');
-                    listItem.classList.add("alert", "alert-light", "mb-2");
+                    const listItem = document.createElement('li');
                     listItem.appendChild(link);
                     linkList.appendChild(listItem);
                     linksArray.push(link.href);
                 }
 
-                openAllButton.style.display = 'block'; // Display the "Open All Links" button
+                openAllButton.style.display = 'inline'; // Display the "Open All Links" button
             } else {
                 console.log('Invalid input');
             }
         });
 
         openAllButton.addEventListener('click', () => {
-            let currentIndex = 0;
-
-            function openLinkWithDelay() {
-                if (currentIndex < linksArray.length) {
-                    window.open(linksArray[currentIndex], "_blank");
-                    currentIndex++;
-                    if (currentIndex < linksArray.length) {
-                        setTimeout(openLinkWithDelay, 8000); // 8 seconds delay
-                    }
+            function openLinksSequentially(index) {
+                if (index < linksArray.length) {
+                    window.open(linksArray[index], "_blank");
+                    setTimeout(() => {
+                        openLinksSequentially(index + 1);
+                    }, 1000); // Delay between opening links (in milliseconds)
                 }
             }
 
-            openLinkWithDelay();
+            openLinksSequentially(0);
         });
     </script>
 </body>
