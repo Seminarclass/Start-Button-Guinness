@@ -7,17 +7,16 @@
             font-family: Arial, sans-serif;
             padding: 10px;
             text-align: center;
+            font-size: 16px;
         }
         label {
             display: block;
             margin-bottom: 5px;
-            font-size: 16px;
         }
         input {
             padding: 5px;
-            width: 80%; /* Adjust the box size */
+            width: 100px;
             margin-bottom: 10px;
-            font-size: 16px;
         }
         #startButton, #openAllButton {
             padding: 10px;
@@ -25,19 +24,16 @@
             color: white;
             border: none;
             cursor: pointer;
-            font-size: 16px;
         }
         #openAllButton {
-            margin-top: 10px; /* Separate the buttons */
+            margin-left: 10px;
         }
         ul {
             list-style-type: none;
             padding: 0;
-            text-align: left; /* Align list items to the left */
         }
         li {
             margin-bottom: 10px;
-            font-size: 16px;
         }
         a {
             color: #007bff;
@@ -94,9 +90,16 @@
         });
 
         openAllButton.addEventListener('click', () => {
-            for (const link of linksArray) {
-                window.open(link); // Open each link in a new tab
+            function openLinksSequentially(index) {
+                if (index < linksArray.length) {
+                    window.open(linksArray[index], "_blank");
+                    setTimeout(() => {
+                        openLinksSequentially(index + 1);
+                    }, 1000); // Delay between opening links (in milliseconds)
+                }
             }
+
+            openLinksSequentially(0);
         });
     </script>
 </body>
