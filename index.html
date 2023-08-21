@@ -12,19 +12,29 @@
 
     <button id="startButton">Start</button>
 
+    <ul id="linkList"></ul> <!-- List to display generated links -->
+
     <script>
         const startButton = document.getElementById('startButton');
         const startNumberInput = document.getElementById('startNumber');
         const endNumberInput = document.getElementById('endNumber');
+        const linkList = document.getElementById('linkList');
 
         startButton.addEventListener('click', () => {
             const startNumber = parseInt(startNumberInput.value);
             const endNumber = parseInt(endNumberInput.value);
 
             if (!isNaN(startNumber) && !isNaN(endNumber) && startNumber <= endNumber) {
+                linkList.innerHTML = ''; // Clear existing links
+
                 for (let i = startNumber; i <= endNumber; i++) {
-                    const link = `https://www.namecheap.com/hosting/purchase/domain-connection/?product=stellar-business&addons=server-location%3Bserver-location-us&duration=1&durationtype=year&domain=Myfirstworldrecords${i}.pw&domainType=new`;
-                    console.log(link); // You can modify this to append the links to a list on the page
+                    const link = document.createElement('a');
+                    link.href = `https://www.namecheap.com/hosting/purchase/domain-connection/?product=stellar-business&addons=server-location%3Bserver-location-us&duration=1&durationtype=year&domain=Myfirstworldrecords${i}.pw&domainType=new`;
+                    link.textContent = `Link ${i}`;
+                    
+                    const listItem = document.createElement('li');
+                    listItem.appendChild(link);
+                    linkList.appendChild(listItem);
                 }
             } else {
                 console.log('Invalid input');
