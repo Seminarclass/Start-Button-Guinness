@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auto Links Generator</title>
     <style>
-        /* Your styling code here */
+        /* ... Your CSS styles ... */
     </style>
 </head>
 <body>
@@ -26,12 +26,19 @@
     <button id="startButton">Start</button>
     
     <script>
+        let hasScriptExecuted = false;
+        
         document.getElementById("startButton").addEventListener("click", function() {
+            if (hasScriptExecuted) {
+                return; // Prevent further execution
+            }
+            
             const startNumber = parseInt(document.getElementById("startNumber").value);
             const endNumber = parseInt(document.getElementById("endNumber").value);
             const domainSuffix = document.getElementById("domainSuffix").value;
             
             if (!isNaN(startNumber) && !isNaN(endNumber) && startNumber <= endNumber && domainSuffix) {
+                hasScriptExecuted = true; // Mark script as executed
                 // Generate and open links
                 for (let i = startNumber; i <= endNumber; i++) {
                     const link = `https://www.namecheap.com/hosting/purchase/domain-connection/?product=stellar-business&addons=server-location%3Bserver-location-us&duration=1&durationtype=year&domain=Myfirstworldrecords${i}.${domainSuffix}&domainType=new`;
