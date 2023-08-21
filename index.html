@@ -15,12 +15,15 @@
             width: 100px;
             margin-bottom: 10px;
         }
-        #startButton {
+        #startButton, #openAllButton {
             padding: 5px 10px;
             background-color: #007bff;
             color: white;
             border: none;
             cursor: pointer;
+        }
+        #openAllButton {
+            margin-left: 10px;
         }
         ul {
             list-style-type: none;
@@ -43,11 +46,49 @@
     <input type="text" id="endNumber" /><br>
 
     <button id="startButton">Start</button>
+    <button id="openAllButton" style="display: none;">Open All Links</button>
 
     <ul id="linkList"></ul>
 
     <script>
-        // ... Rest of your JavaScript code
+        const startButton = document.getElementById('startButton');
+        const openAllButton = document.getElementById('openAllButton');
+        const startNumberInput = document.getElementById('startNumber');
+        const endNumberInput = document.getElementById('endNumber');
+        const linkList = document.getElementById('linkList');
+        const linksArray = [];
+
+        startButton.addEventListener('click', () => {
+            const startNumber = parseInt(startNumberInput.value);
+            const endNumber = parseInt(endNumberInput.value);
+
+            if (!isNaN(startNumber) && !isNaN(endNumber) && startNumber <= endNumber) {
+                linksArray.length = 0; // Clear existing links
+                linkList.innerHTML = '';
+
+                for (let i = startNumber; i <= endNumber; i++) {
+                    const link = document.createElement('a');
+                    link.href = `https://www.namecheap.com/hosting/purchase/domain-connection/?product=stellar-business&addons=server-location%3Bserver-location-us&duration=1&durationtype=year&domain=Myfirstworldrecords${i}.pw&domainType=new`;
+                    link.textContent = `Link ${i}`;
+                    link.target = "_blank"; // Open link in a new tab
+
+                    const listItem = document.createElement('li');
+                    listItem.appendChild(link);
+                    linkList.appendChild(listItem);
+                    linksArray.push(link.href);
+                }
+
+                openAllButton.style.display = 'inline'; // Display the "Open All Links" button
+            } else {
+                console.log('Invalid input');
+            }
+        });
+
+        openAllButton.addEventListener('click', () => {
+            for (const link of linksArray) {
+                window.open(link); // Open each link in a new tab
+            }
+        });
     </script>
 </body>
 </html>
