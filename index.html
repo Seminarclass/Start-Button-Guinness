@@ -9,42 +9,7 @@
             text-align: center;
             font-size: 16px;
         }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        input {
-            padding: 5px;
-            width: 100px;
-            margin-bottom: 10px;
-        }
-        #startButton, #openAllButton {
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        #openAllButton {
-            margin-left: 10px;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin-bottom: 10px;
-        }
-        a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        /* Add new styles for the indicator */
-        #openedIndicator {
-            color: green;
-            font-weight: bold;
-            margin-top: 10px;
-        }
+        /* Rest of your styles */
     </style>
 </head>
 <body>
@@ -61,15 +26,12 @@
 
     <ul id="linkList"></ul>
 
-    <p id="openedIndicator">Links Opened: 0</p> <!-- Add the indicator -->
-
     <script>
         const startButton = document.getElementById('startButton');
         const openAllButton = document.getElementById('openAllButton');
         const startNumberInput = document.getElementById('startNumber');
         const endNumberInput = document.getElementById('endNumber');
         const linkList = document.getElementById('linkList');
-        const openedIndicator = document.getElementById('openedIndicator'); // Get the indicator element
         const linksArray = [];
 
         startButton.addEventListener('click', () => {
@@ -99,18 +61,19 @@
         });
 
         openAllButton.addEventListener('click', () => {
-            function openLinksSequentially(index, openedCount) {
-                if (index < linksArray.length) {
-                    window.open(linksArray[index], "_blank");
-                    openedCount++; // Increment the count
-                    openedIndicator.textContent = `Links Opened: ${openedCount}`; // Update the indicator text
-                    setTimeout(() => {
-                        openLinksSequentially(index + 1, openedCount);
-                    }, 1000); // Delay between opening links (in milliseconds)
+            let currentIndex = 0;
+
+            function openLinkWithDelay() {
+                if (currentIndex < linksArray.length) {
+                    window.open(linksArray[currentIndex], "_blank");
+                    currentIndex++;
+                    if (currentIndex < linksArray.length) {
+                        setTimeout(openLinkWithDelay, 8000); // 8 seconds delay
+                    }
                 }
             }
 
-            openLinksSequentially(0, 0); // Initialize openedCount to 0
+            openLinkWithDelay();
         });
     </script>
 </body>
