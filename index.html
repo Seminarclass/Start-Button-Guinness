@@ -2,11 +2,11 @@
 <html>
 <head>
     <title>Auto Link Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             font-family: Arial, sans-serif;
             padding: 10px;
-            text-align: center;
             font-size: 16px;
         }
         label {
@@ -15,22 +15,35 @@
         }
         input {
             padding: 5px;
-            width: 100px;
+            width: 100%;
             margin-bottom: 10px;
+            box-sizing: border-box;
         }
-        #startButton, #openAllButton {
+        #startButton, #stopButton, #openAllButton {
+            width: 100%;
             padding: 10px;
             background-color: #007bff;
             color: white;
             border: none;
             cursor: pointer;
         }
-        #openAllButton {
-            margin-left: 10px;
+        #stopButton, #openAllButton {
+            display: none;
+            margin-top: 10px;
+        }
+        #successIndicator {
+            display: none;
+            background-color: #28a745; /* Green color */
+            text-align: center; /* Center-align the content */
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            color: white;
         }
         ul {
             list-style-type: none;
             padding: 0;
+            text-align: center; /* Center-align the generated links */
         }
         li {
             margin-bottom: 10px;
@@ -39,43 +52,55 @@
             color: #007bff;
             text-decoration: none;
         }
+        #linkCounter {
+            font-weight: bold; /* Set font weight to bold */
+        }
     </style>
 </head>
 <body>
     <h1>Auto Link Generator</h1>
     
     <label for="startNumber">Starting Number:</label>
-    <input type="text" id="startNumber" /><br>
+    <input type="text" id="startNumber" />
 
     <label for="endNumber">Ending Number:</label>
-    <input type="text" id="endNumber" /><br>
+    <input type="text" id="endNumber" />
 
     <button id="startButton">Start</button>
-    <button id="openAllButton" style="display: none;">Open All Links</button>
+    <button id="stopButton">Stop</button>
+    <button id="openAllButton">Open All Links</button>
+
+    <!-- Added success indicator -->
+    <p id="linkCounter"><span style="font-weight: normal;">Links Opened: </span>0</p>
+    <p id="successIndicator">All links opened successfully!</p>
 
     <ul id="linkList"></ul>
 
     <script>
         const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
         const openAllButton = document.getElementById('openAllButton');
+        const successIndicator = document.getElementById('successIndicator'); // Added success indicator element
         const startNumberInput = document.getElementById('startNumber');
         const endNumberInput = document.getElementById('endNumber');
         const linkList = document.getElementById('linkList');
         const linksArray = [];
+
+        let stopScript = false;
 
         startButton.addEventListener('click', () => {
             const startNumber = parseInt(startNumberInput.value);
             const endNumber = parseInt(endNumberInput.value);
 
             if (!isNaN(startNumber) && !isNaN(endNumber) && startNumber <= endNumber) {
-                linksArray.length = 0; // Clear existing links
+                linksArray.length = 0;
                 linkList.innerHTML = '';
 
                 for (let i = startNumber; i <= endNumber; i++) {
                     const link = document.createElement('a');
                     link.href = `https://www.namecheap.com/hosting/purchase/domain-connection/?product=stellar-business&addons=server-location%3Bserver-location-us&duration=1&durationtype=year&domain=Myfirstworldrecords${i}.pw&domainType=new`;
                     link.textContent = `Link ${i}`;
-                    link.target = "_blank"; // Open link in a new tab
+                    link.target = "_blank";
 
                     const listItem = document.createElement('li');
                     listItem.appendChild(link);
@@ -83,22 +108,43 @@
                     linksArray.push(link.href);
                 }
 
-                openAllButton.style.display = 'inline'; // Display the "Open All Links" button
+                openAllButton.style.display = 'inline';
+                startButton.style.display = 'none';
+                stopButton.style.display = 'inline';
+                successIndicator.style.display = 'none'; // Hide the success indicator
             } else {
                 console.log('Invalid input');
             }
         });
 
+        stopButton.addEventListener('click', () => {
+            stopScript = true;
+            stopButton.style.display = 'none';
+            startButton.style.display = 'inline';
+            successIndicator.style.display = 'none'; // Hide the success indicator
+        });
+
         openAllButton.addEventListener('click', () => {
+            let linkCounter = 0;
+
             function openLinksSequentially(index) {
-                if (index < linksArray.length) {
-                    window.open(linksArray[index], "_blank");
+                if (index < linksArray.length && !stopScript) {
+                    const linkWindow = window.open(linksArray[index], "_blank");
+                    linkWindow.opener = null; // Prevents the opened window from accessing the parent window
+                    linkCounter++;
+                    document.getElementById('linkCounter').textContent = `Links Opened: ${linkCounter}`;
+
+                    if (linkCounter === linksArray.length) {
+                        successIndicator.style.display = 'block'; // Show the success indicator when all links are opened
+                    }
+
                     setTimeout(() => {
                         openLinksSequentially(index + 1);
-                    }, 10000); // Delay between opening links (in milliseconds)
+                    }, 10000);
                 }
             }
 
+            stopScript = false;
             openLinksSequentially(0);
         });
     </script>
